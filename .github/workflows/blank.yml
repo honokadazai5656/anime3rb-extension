@@ -9,13 +9,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build
-        run: |
-          wget https://raw.githubusercontent.com/aniyomiorg/aniyomi-extensions/main/gradlew
-          chmod +x gradlew
-          ./gradlew assembleDebug
-      - name: Upload
+      - name: Setup Gradle
+        run: gradle init --type basic
+      - name: Build with Gradle
+        run: gradle assembleDebug
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: anime3rb-apk
-          path: "**/*.apk"
+          path: "**/build/outputs/apk/debug/*.apk"
