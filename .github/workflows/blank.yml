@@ -1,0 +1,21 @@
+name: Build APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build
+        run: |
+          wget https://raw.githubusercontent.com/aniyomiorg/aniyomi-extensions/main/gradlew
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: anime3rb-apk
+          path: "**/*.apk"
